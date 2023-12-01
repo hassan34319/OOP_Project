@@ -120,21 +120,21 @@ void GUI_Renderer::loadImages()
 		exit(2);
 	}
 
-	mGameField = IMG_LoadTexture(mRenderer, "assets/field.jpg");
+	mGameField = IMG_LoadTexture(mRenderer, "assets/bg.png");
 	if (!mGameField)
 	{
 		std::cerr << "IMG error: " << IMG_GetError() << std::endl;
 		exit(2);
 	}
 
-	mDifficultyEasy  = IMG_LoadTexture(mRenderer,"assets/easy.png");
+	mDifficultyEasy  = IMG_LoadTexture(mRenderer,"assets/start1.png");
 	if (!mDifficultyEasy)
 	{
 		std::cerr << "IMG error: " << IMG_GetError() << std::endl;
 		exit(2);
 	}
 
-	mDifficultyNormal = IMG_LoadTexture(mRenderer, "assets/hard.png");
+	mDifficultyNormal = IMG_LoadTexture(mRenderer, "assets/start2.png");
 	if (!mDifficultyNormal)
 	{
 		std::cerr << "IMG error: " << IMG_GetError() << std::endl;
@@ -177,7 +177,7 @@ void GUI_Renderer::loadSounds()
 	Mix_PlayMusic(mSound, -1);
 }
 
-EEvent GUI_Renderer::checkEvent(SElement & inMallet) const
+EEvent GUI_Renderer::checkEvent(SElement & inMallet, bool gamePreperation) const
 {
 	SDL_Event event;
 
@@ -199,7 +199,7 @@ EEvent GUI_Renderer::checkEvent(SElement & inMallet) const
 		}
 		break;
 
-	case SDL_MOUSEMOTION:
+	case SDL_MOUSEMOTION: //Mallet moving in the direction of mouse motion
 		inMallet.xPrevPos = inMallet.xCurrPos;
 		inMallet.yPrevPos = inMallet.yCurrPos;
 		inMallet.xCurrPos = event.motion.x - malletRadius;
@@ -207,20 +207,21 @@ EEvent GUI_Renderer::checkEvent(SElement & inMallet) const
 		break;
 
 	case SDL_MOUSEBUTTONUP:
-		if (event.button.button == SDL_BUTTON_LEFT)
+		if (event.button.button == SDL_BUTTON_LEFT) //If mouse left click
 		{
 			if ((event.button.x > 55) && (event.button.x < 395) && 				// Play button borders
-				(event.button.y > 300) && (event.button.y < 559.5))
-				return eEvent_PrepareToPlay;
+				(event.button.y > 300) && (event.button.y < 400))
+				return eEvent_PrepareToPlay;	//Click on play
 
-			if ((event.button.y > 666.9) && (event.button.y < 400)) 					// Difficulty button borders
-				return eEvent_ChangeDifficulty;
+			if ((event.button.x > 131) && (event.button.x < 304) && 				// Play button borders
+				(event.button.y > 457) && (event.button.y < 616) && !gamePreperation)
+				return eEvent_ChangeDifficulty; //Click on change difficulty
 
 			if ((event.button.y > (boardHeight * 0.75 - puckRadius)) && (event.button.y < (boardHeight * 0.75 + puckRadius)) &&
-				(event.button.x > (boardWidth / 2 - puckRadius)) && (event.button.x < (boardWidth / 2 + puckRadius)))
+				(event.button.x > (boardWidth / 2 - puckRadius)) && (event.button.x < (boardWidth / 2 + puckRadius))  && gamePreperation) 
 			{
 				return eEvent_Play;
-			}
+			} //Mallet Border (To click on mallet to select screen)
 
 			//if ((event.button.y > 305) && (event.button.y < 345) && 				// Settings button borders
 			//	(event.button.x > 135) && (event.button.x < 300))

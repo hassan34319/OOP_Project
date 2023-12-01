@@ -10,8 +10,8 @@
 #include <string>
 #include "types.h"
 
-const int boardWidth = 720;           //standard air hockey field size 232/124. Ratio ~1.855                         
-const int boardHeight = 1280;
+const int boardWidth = 450;           //standard air hockey field size 232/124. Ratio ~1.855                         
+const int boardHeight = 840;
 const int malletDiameter = 50;
 const int speakerDiameter = 40;
 const int puckDiameter = 40;
@@ -31,7 +31,7 @@ public:
 	~GUI_Renderer();
 
 	void gameMenu(EDifficulty inDifficulty); 
-	EEvent checkEvent(SElement & inStriker) const;
+	EEvent checkEvent(SElement & inStriker, bool gamePreperation) const;
 	void drawGame(const std::vector<SElement> & inElements, bool gamePreparation);
 	void drawGameElement(SDL_Rect & inGameElement, SDL_Texture* texture, const SElement & inElement, const int & diameter);
 	void drawScore(SDL_Rect & inGameElement, const std::vector<SElement> & inElements);
