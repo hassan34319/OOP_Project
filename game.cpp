@@ -286,3 +286,97 @@ void AirHockey::startGame()
 		}
 	}
 }
+
+
+
+
+-----------------------------------------------------------------------------------------------------
+	refraction of classes
+
+// Puck.cpp
+#include "Puck.h"
+
+Puck::Puck(double startX, double startY, double startSpeedX, double startSpeedY)
+    : xCurrPos(startX), yCurrPos(startY), xSpeed(startSpeedX), ySpeed(startSpeedY) {
+    // Constructor initialization
+}
+
+void Puck::updatePosition() {
+    // Update the puck's position based on its speed
+    xCurrPos += xSpeed;
+    yCurrPos += ySpeed;
+    // Implement other logic if necessary...
+}
+
+
+// Mallet.cpp
+#include "Mallet.h"
+
+Mallet::Mallet(double startX, double startY, double startSpeedX, double startSpeedY)
+    : xCurrPos(startX), yCurrPos(startY), xSpeed(startSpeedX), ySpeed(startSpeedY), score(0) {
+    // Constructor initialization
+}
+
+void Mallet::checkBoardLimits() {
+    // Check and update the mallet's position within board limits
+    // Implement logic to prevent the mallet from going out of board limits
+    // This function can handle boundary conditions...
+}
+
+// GUIManager.cpp
+#include "GUIManager.h"
+
+void GUIManager::gameMenu(EDifficulty difficulty) {
+    // Implement the game menu functionality
+}
+
+EEvent GUIManager::checkEvent() {
+    // Implement event checking based on user input or game state
+    // Return the event type
+}
+
+void GUIManager::drawGame() {
+    // Implement the game rendering logic
+}
+
+bool GUIManager::enableSound() {
+    // Implement sound enabling/disabling logic
+    // Return whether sound is enabled or not
+}
+
+void GUIManager::playClashSound(/* Pass necessary parameters here */) {
+    // Implement sound playback logic for different events
+}
+
+
+// GameManager.cpp
+#include "GameManager.h"
+
+GameManager::GameManager()
+    : mGUIManager(), mPuck(/* Initialize with starting values */), 
+      mPlayerMallet(/* Initialize player mallet with starting values */), 
+      mBotMallet(/* Initialize bot mallet with starting values */), 
+      gameDifficulty(EDifficulty::eDifficulty_Easy),
+      mGamePreparation(false),
+      mIsPlay(false),
+      mMute(false),
+      FPS(120),
+      frameDelay(1000 / FPS) {
+    // Initialize other variables if needed
+}
+
+void GameManager::startGame() {
+    while (/* Condition to continue the game */) {
+        frameStart = SDL_GetTicks(); // Or obtain the start time using the appropriate method
+
+        // Implement the game loop here
+        // Call other necessary methods to manage the game flow
+        // Handle player input, update game state, render the game, etc.
+
+        frameTime = SDL_GetTicks() - frameStart; // Or calculate frame time using appropriate method
+
+        if (frameDelay > frameTime) {
+            SDL_Delay(frameDelay - frameTime); // Ensure FPS regulation
+        }
+    }
+}
