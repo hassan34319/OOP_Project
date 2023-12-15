@@ -9,6 +9,7 @@
 #include <vector>
 #include <string>
 #include "types.h"
+#include "new.cpp"
 
 const int boardWidth = 450;           //standard air hockey field size 232/124. Ratio ~1.855                         
 const int boardHeight = 840;
