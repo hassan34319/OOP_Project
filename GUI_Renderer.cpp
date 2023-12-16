@@ -87,7 +87,7 @@ void GUI_Renderer::loadImages()
 		exit(2);
 	}
 
-	mPuck = IMG_LoadTexture(mRenderer, "assets/puck2.png");
+	mPuck = IMG_LoadTexture(mRenderer, "assets/puckMain.png");
 	if (!mPuck)
 	{
 		std::cerr << "IMG error: " << IMG_GetError() << std::endl;
@@ -140,6 +140,18 @@ void GUI_Renderer::loadImages()
 		std::cerr << "IMG error: " << IMG_GetError() << std::endl;
 		exit(2);
 	}
+	mWin = IMG_LoadTexture(mRenderer, "assets/gameWon.png");
+	if (!mWin)
+	{
+		std::cerr << "IMG error: " << IMG_GetError() << std::endl;
+		exit(2);
+	}
+	mLost = IMG_LoadTexture(mRenderer, "assets/gameLost.png");
+	if (!mLost)
+	{
+		std::cerr << "IMG error: " << IMG_GetError() << std::endl;
+		exit(2);
+	}
 }
 
 void GUI_Renderer::loadSounds()
@@ -177,7 +189,7 @@ void GUI_Renderer::loadSounds()
 	Mix_PlayMusic(mSound, -1);
 }
 
-EEvent GUI_Renderer::checkEvent(SElement & inMallet, bool gamePreperation) const
+EEvent GUI_Renderer::checkEvent(SElement & inMallet, bool gamePreperation, bool gameOver) const
 {
 	SDL_Event event;
 
@@ -209,6 +221,9 @@ EEvent GUI_Renderer::checkEvent(SElement & inMallet, bool gamePreperation) const
 	case SDL_MOUSEBUTTONUP:
 		if (event.button.button == SDL_BUTTON_LEFT) //If mouse left click
 		{
+			if (gameOver ==  true) {
+				return eEvent_win;
+			}
 			if ((event.button.x > 55) && (event.button.x < 395) && 				// Play button borders
 				(event.button.y > 300) && (event.button.y < 400))
 				return eEvent_PrepareToPlay;	//Click on play
@@ -226,7 +241,6 @@ EEvent GUI_Renderer::checkEvent(SElement & inMallet, bool gamePreperation) const
 			//if ((event.button.y > 305) && (event.button.y < 345) && 				// Settings button borders
 			//	(event.button.x > 135) && (event.button.x < 300))
 			//	return eEvent_Settings;
-			
 			if (event.button.y > boardHeight - speakerDiameter - borderWidth && 				// SoundOn/SouundOff button borders
 				event.button.x < speakerDiameter + borderWidth)
 				return eEvent_Sound;
@@ -316,6 +330,20 @@ void GUI_Renderer::gameMenu(EDifficulty difficulty)
 	drawSpeaker();
 	SDL_RenderPresent(mRenderer);
 }
+void GUI_Renderer::gameEnd(int result)
+{
+	SDL_RenderClear(mRenderer);
+	// Player won
+	if (result == 0) {
+		SDL_RenderCopy(mRenderer, mWin, NULL, NULL);
+	}
+	else {
+		SDL_RenderCopy(mRenderer, mLost, NULL, NULL);
+	}
+	SDL_RenderPresent(mRenderer);
+}
+
+
 
 bool GUI_Renderer::enableSound()
 {

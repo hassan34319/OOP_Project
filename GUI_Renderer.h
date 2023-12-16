@@ -31,7 +31,8 @@ public:
 	~GUI_Renderer();
 
 	void gameMenu(EDifficulty inDifficulty); 
-	EEvent checkEvent(SElement & inStriker, bool gamePreperation) const;
+	void gameEnd(int result); 
+	EEvent checkEvent(SElement & inStriker, bool gamePreperation, bool gameOver) const;
 	void drawGame(const std::vector<SElement> & inElements, bool gamePreparation);
 	void drawGameElement(SDL_Rect & inGameElement, SDL_Texture* texture, const SElement & inElement, const int & diameter);
 	void drawScore(SDL_Rect & inGameElement, const std::vector<SElement> & inElements);
@@ -53,6 +54,8 @@ private:
 	SDL_Texture* mGameField;
 	SDL_Texture* mDifficultyEasy;
 	SDL_Texture* mDifficultyNormal;
+	SDL_Texture* mWin;
+	SDL_Texture* mLost;
 	SDL_Texture* mMalletPlayer;
 	SDL_Texture* mMalletBot;
 	SDL_Texture* mPuck;

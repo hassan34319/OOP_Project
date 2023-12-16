@@ -24,7 +24,8 @@ enum EEvent {
 	eEvent_Play,
 	eEvent_ChangeDifficulty,
 	eEvent_Sound,
-	eEvent_Menu
+	eEvent_Menu,
+	eEvent_win
 };
 
 struct SElement {

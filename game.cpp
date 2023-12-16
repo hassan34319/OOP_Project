@@ -3,7 +3,9 @@
 // ------------------------------------------------------------------------------ move to the class!!!!!!!!!!!!!!!
 const int leftSideGate = (boardWidth - gateWidth) / 2;
 const int rightSideGate = leftSideGate + gateWidth;
+int winner =0;
 bool gameOver = false;
+bool winningClick = false;
 
 //==============================================================================
 AirHockey::AirHockey() : mGameUI(new GUI_Renderer)						
@@ -98,7 +100,7 @@ void AirHockey::calcGameState()
 			
 			const int maxScore = 4;													//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-
+	// Game End
 			if (mGameElements[eTypeOfElement_Player].score == maxScore)
 			{
 				mIsPlay = false;
@@ -217,7 +219,7 @@ void AirHockey::startGame()
 	{
 		frameStart = SDL_GetTicks();
 
-		EEvent event = mGameUI->checkEvent(mGameElements[eTypeOfElement_Player], mGamePreparation);
+		EEvent event = mGameUI->checkEvent(mGameElements[eTypeOfElement_Player], mGamePreparation, gameOver);
 		switch (event)
 		{
 		default:
@@ -230,6 +232,9 @@ void AirHockey::startGame()
 			{
 				mGamePreparation = true;
 			}
+			break;
+		case eEvent_win :
+			winningClick = true;
 			break;
 		case eEvent_Play:
 			if (!mIsPlay)
@@ -259,12 +264,19 @@ void AirHockey::startGame()
 			}
 			break;
 		}
-		if (gameOver == true)
+		if (gameOver == true && winningClick == false)
+		{	
+			winner = mGameElements[eTypeOfElement_Player].score > mGameElements[eTypeOfElement_Bot].score ? 0 : 1;
+			mGameUI->gameEnd(winner);
+
+		}
+		if (gameOver == true && winningClick == true)
 		{
 			mGameUI->gameMenu(gameDifficulty);
 			mGameElements[eTypeOfElement_Bot].score = 0;
 			mGameElements[eTypeOfElement_Player].score = 0;
 			gameOver = false;
+			winningClick = false;
 		}
 			
 
