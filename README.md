@@ -9,3 +9,8 @@ Thanks to the C++ magic, every part of the game, from the paddles to the puck, m
 So, if you're in the mood for some laughs, a bit of friendly rivalry, and a whole lot of fun, "SkyGlide" is your go-to game. Grab a friend, hit the virtual arena, and let the good times roll in this human-friendly, C++-crafted air hockey adventure!
 
 Note : This is a Sophomore year OOP Project of Muhammad Hasan Nizami and Muhammad Hassan. before copying anything, please contact the owners.
+
+References :
+ https://github.com/vgladush/air_hockey
+ https://github.com/educ8s/Cpp-Pong-Game-Raylib/blob/main/pong.jpg
+ https://github.com/hazarbelge/opengl_the_glow_hockey/blob/main/textures/menu_bg.bmp 
