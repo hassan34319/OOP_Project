@@ -1,1 +1,5 @@
 
+References :
+ https://github.com/vgladush/air_hockey
+ https://github.com/educ8s/Cpp-Pong-Game-Raylib/blob/main/pong.jpg
+ https://github.com/hazarbelge/opengl_the_glow_hockey/blob/main/textures/menu_bg.bmp 
